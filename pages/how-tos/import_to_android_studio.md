@@ -2,7 +2,8 @@
 sidebar: home_sidebar
 title: How to import the sources to Android Studio / IntelliJ
 folder: how-tos
-permalink: import-android-studio-howto.html
+redirect_from: import-android-studio-howto.html
+permalink: /how-to/import-to-android-studio
 tags:
  - how-to
 ---
@@ -55,7 +56,7 @@ Then click on "Edit Custom VM Options" and include the following:
 -Xmx748m
 ```
 
-This will set the initial allocated (`Xms` parameter) and maximum usable (`Xmx` parameter) RAM to 748MB each. You can also use higher numbers but should not go below that to ensure usablility. You can find more information of [these](https://developer.android.com/studio/intro/studio-config.html#adjusting_heap_size) and other parameters in the [official documentation](https://developer.android.com/studio/intro/studio-config.html)
+This will set the initial allocated (`Xms` parameter) and maximum usable (`Xmx` parameter) RAM to 748MB each. You can also use higher numbers but should not go below that to ensure usability. You can find more information of [these](https://developer.android.com/studio/intro/studio-config.html#adjusting_heap_size) and other parameters in the [official documentation](https://developer.android.com/studio/intro/studio-config.html)
 
 ### Increase the file parsing limit
 
@@ -87,5 +88,5 @@ Now, after all the previous steps are done, you can actually start developing an
 
 ### Contribute!
 
-After you have modified the sources and tested your change, you can contribute to LineageOS by [submitting your work]({{ "submitting-patch-howto.html" | relative_url}}).
+After you have modified the sources and tested your change, you can contribute to LineageOS by [submitting your work]({{ "/how-to/submitting-patches" | relative_url }}).
 

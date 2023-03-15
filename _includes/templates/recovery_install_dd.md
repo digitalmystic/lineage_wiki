@@ -21,17 +21,19 @@
    2. Install and run the apk to achieve root.
 {% endcase %}
 
+{% include snippets/before_recovery_install.md %}
+
 ## Installing a custom recovery using `dd`
 
-{% if device.custom_recovery_link %}
+{%- if device.custom_recovery_link %}
 1. Download a custom recovery - you can download one [here]({{ device.custom_recovery_link }}).
-{% else %}
-{% if device.uses_lineage_recovery %}
-1. Download a custom recovery - you can download [Lineage Recovery](https://download.lineageos.org/{{ custom_recovery_codename }}). Simply download the latest recovery file, named something like `lineage-{{ device.current_branch }}-{{ site.time | date: "%Y%m%d" }}-recovery-{{ custom_recovery_codename }}.img`.
-{% else %}
+{%- elsif device.uses_twrp %}
 1. Download a custom recovery - you can download [TWRP](https://dl.twrp.me/{{ custom_recovery_codename }}). Simply download the latest recovery file, named something like `twrp-x.x.x-x-{{ custom_recovery_codename }}.img`.
-{% endif %}
-{% endif %}
+{%- elsif device.maintainers != empty %}
+1. Download [Lineage Recovery](https://download.lineageos.org/devices/{{ custom_recovery_codename }}). Simply download the latest recovery file, named `recovery.img`.
+{%- else %}
+1. [Build]({{ "devices/" | append: device.codename | append: "/build" | relative_url }}) a LineageOS installation package. The recovery will be built as part of it!
+{%- endif %}
 2. Place the recovery image file on the root of `/sdcard`:
    * Using adb: `adb push <recovery_filename>.img /sdcard/<recovery_filename>.img`
     {% include alerts/tip.html content="The file may not be named identically to what stands in this command, so adjust accordingly." %}
@@ -41,9 +43,8 @@
 su
 dd if=/sdcard/<recovery_filename>.img of={{ device.recovery_partition }}
 ```
-4. Manually reboot into recovery:
-    * {{ device.recovery_boot }}
-
-{% if device.vendor == "LG" %}
-{% include alerts/note.html content="Accept the factory reset prompt using the hardware buttons. If you have done everything correctly, this will not actually reset your device but instead will install the custom recovery." %}
-{% endif %}
+4. Reboot into recovery.
+    * From the same shell, type the following command:
+```
+reboot recovery
+```

@@ -1,42 +1,37 @@
 architecture: arm
-battery: {removable: False, capacity: 2300}
+battery: {removable: False, capacity: 2300, tech: 'Li-Po'}
 bluetooth: {spec: 4.0 + LE, profiles: [A2DP]}
 cameras:
-- {flash: 'Dual LED', info: '13 MP, 4128 x 3096 pixels, autofocus'}
-- {flash: '', info: '2 MP, 1080p'}
-channels: [nightly]
+- {flash: 'Dual LED', info: '13 MP'}
+- {flash: None, info: '2 MP'}
 codename: victara
 cpu: Krait 400
 cpu_cores: '4'
 cpu_freq: 2.5 GHz
-current_branch: 16.0
+current_branch: 18.1
+dimensions: None
 download_boot: With the device powered off, hold <kbd>Volume Down</kbd> + <kbd>Power</kbd>.
-gpu: Adreno 330
+format_on_upgrade: true
+gpu: Qualcomm Adreno 330
 image: victara.png
 install_method: fastboot_motorola
 kernel: android_kernel_motorola_msm8974
-maintainers: [linckandrea, Tortel]
-models: [XT1092, XT1093, XT1095, XT1096, XT1097]
-name: Moto X 2014
-network:
-- {tech: 2G, bands: '850 900 1800 1900 MHz GSM' }
-- {tech: 3G, bands: '850 900 1800 1900 2100 MHz HSDPA' }
-- {tech: 4G, bands: '1(2100) 3(1800) 7(2600) 8(900) 20(800)' }
+maintainers: [jro1979, linckandrea, npjohnson]
+models: [XT1092, XT1093, XT1094, XT1095, XT1096, XT1097, XT1098]
+name: moto x (2014)
+network: [2G GSM, 3G UMTS, 4G LTE]
 peripherals: [Accelerometer, Gyroscope, Proximity sensor, Compass, Barometer, Thermometer]
 ram: 2 GB
 recovery_boot: With the device powered off, hold <kbd>Volume Down</kbd> + <kbd>Power</kbd>.
- On the next screen use <kbd>Volume Down</kbd> to scroll to Recovery and then press <kbd>Power</kbd> to select.
+ On the next screen use <kbd>Volume Down</kbd> to scroll to Recovery and then press <kbd>Volume Up</kbd> to select.
+recovery_reboot: fastboot_menu
 release: 2014-09-26
-screen: 132 mm (5.2 in)
-screen_ppi: ~424
-screen_res: 1080 x 1920
-screen_tech: AMOLED capacitive touchscreen, 16M colors
-sdcard:
+screen: {size: '132 mm (5.2 in)', density: 424, resolution: '1080x1920', technology: 'AMOLED'}
 soc: Qualcomm MSM8974AC Snapdragon 801
 storage: 16/32 GB
 tree: android_device_motorola_victara
 type: phone
 vendor: Motorola
 vendor_short: motorola
-versions: [14.1, 16.0]
+versions: [14.1, 16.0, 17.1, 18.1]
 wifi: 802.11 a/b/g/n/ac, Dual-band, DLNA, Hotspot

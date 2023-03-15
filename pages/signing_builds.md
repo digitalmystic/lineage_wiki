@@ -13,8 +13,11 @@ From the root of your Android tree, run these commands, altering the `subject` l
 ```
 subject='/C=US/ST=California/L=Mountain View/O=Android/OU=Android/CN=Android/emailAddress=android@android.com'
 mkdir ~/.android-certs
-for x in releasekey platform shared media testkey; do \
-    ./development/tools/make_key ~/.android-certs/$x "$subject"; \
+for cert in bluetooth cyngn-app media networkstack platform releasekey sdk_sandbox shared testcert testkey verity; do \
+    ./development/tools/make_key ~/.android-certs/$cert "$subject"; \
+done
+for apex in com.android.adbd com.android.adservices com.android.adservices.api com.android.appsearch com.android.art com.android.bluetooth com.android.btservices com.android.cellbroadcast com.android.compos com.android.connectivity.resources com.android.conscrypt com.android.extservices com.android.hotspot2.osulogin com.android.i18n com.android.ipsec com.android.media com.android.media.swcodec com.android.mediaprovider com.android.nearby.halfsheet com.android.neuralnetworks com.android.ondevicepersonalization com.android.os.statsd com.android.permission com.android.resolv com.android.runtime com.android.safetycenter.resources com.android.scheduling com.android.sdkext com.android.support.apexer com.android.telephony com.android.tethering com.android.tzdata com.android.uwb com.android.uwb.resources com.android.virt com.android.wifi com.android.wifi.dialog com.android.wifi.resources com.qorvo.uwb; do \
+    ./development/tools/make_key ~/.android-certs/$apex "$subject"; \
 done
 ```
 
@@ -38,9 +41,11 @@ mka target-files-package otatools
 Sit back and wait for a while - it may take a while depending on your computer's specs. After
 it's finished, you just need to sign all the APKs:
 
+{% include alerts/note.html content="For LineageOS versions older than 18.1 you will have to prepend \"./build/tools/releasetools/\" on the \"sign_target_files_apks\" and \"ota_from_target_files\" commands below." %}
+
 ```
 croot
-./build/tools/releasetools/sign_target_files_apks -o -d ~/.android-certs \
+sign_target_files_apks -o -d ~/.android-certs \
     $OUT/obj/PACKAGING/target_files_intermediates/*-target_files-*.zip \
     signed-target_files.zip
 ```
@@ -50,7 +55,7 @@ croot
 Now, to generate the installable zip, run:
 
 ```
-./build/tools/releasetools/ota_from_target_files -k ~/.android-certs/releasekey \
+ota_from_target_files -k ~/.android-certs/releasekey \
     --block --backup=true \
     signed-target_files.zip \
     signed-ota_update.zip
@@ -67,9 +72,24 @@ on all packages at every boot. Install them for as little time as possible." %}
 
 You can set up your own migration builds by running:
 
+LineageOS 19.1:
+```
+repopick -f 327460
+```
+
+LineageOS 18.1:
+```
+repopick -f 297539
+```
+
+LineageOS 17.1:
+```
+repopick -f 266939
+```
+
 LineageOS 16.0:
 ```
-repopick 239520
+repopick -f 239520
 ```
 
 LineageOS 15.1:
@@ -80,7 +100,7 @@ repopick -f 192656 -P frameworks/base
 
 LineageOS 14.1:
 ```
-repopick 156047 162144
+repopick -f 156047 162144
 ```
 
 Then, follow the [instructions to generate an install package](#generating-an-install-package).
@@ -88,6 +108,24 @@ Then, follow the [instructions to generate an install package](#generating-an-in
 #### Going back
 
 After installing the migration build, you can switch back to building normal builds:
+
+LineageOS 19.1:
+```
+cd frameworks/base
+git reset --hard github/lineage-19.1
+```
+
+LineageOS 18.1:
+```
+cd frameworks/base
+git reset --hard github/lineage-18.1
+```
+
+LineageOS 17.1:
+```
+cd frameworks/base
+git reset --hard github/lineage-17.1
+```
 
 LineageOS 16.0:
 ```
@@ -126,7 +164,7 @@ the recovery.
 
 #### Test-keys to official or vice versa
 
-If you are moving from a test-keys build (eg an "unsigned" unofficial build) to an official
+If you are moving from a test-keys build (e.g. an "unsigned" unofficial build) to an official
 LineageOS build, you can push the script to your device and run it from Android:
 
 ```
@@ -145,7 +183,7 @@ Or run it from recovery:
 # Ensure both /data and /system are mounted, then continue
 adb push ./lineage/scripts/key-migration/migration.sh /data/local/tmp/migration.sh
 adb shell chmod +x /data/local/tmp/migration.sh
-adb shell /data/local/tmp/migration.sh official
+adb shell sh /data/local/tmp/migration.sh official
 ```
 
 If you are migrating from an official build to your own "unsigned" builds, you can run the

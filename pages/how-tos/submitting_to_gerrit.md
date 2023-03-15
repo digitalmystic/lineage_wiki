@@ -2,7 +2,8 @@
 sidebar: home_sidebar
 title: How to submit a patch
 folder: how-tos
-permalink: submitting-patch-howto.html
+redirect_from: submitting-patch-howto.html
+permalink: /how-to/submitting-patches
 tags:
  - how-to
 ---
@@ -10,35 +11,78 @@ tags:
 
 ## Initial setup
 
-If you haven't yet successfully downloaded the source and generated a build of LineageOS, make sure you are familiar with those steps. Information on doing a build is available in the build guide for [your device]({{ "/devices" | relative_url }}).
+If you haven't yet successfully downloaded the source and generated a build of LineageOS, make sure you are familiar with those steps. Information on doing a build is available in the build guide for [your device]({{ "devices/" | relative_url }}).
 
 Setup an account on [Gerrit](https://review.lineageos.org), sign the [Contributor Agreement](https://review.lineageos.org/#/settings/agreements) and configure your Gerrit username in the Gerrit portal under **Settings -> HTTP Password**.
+
+{% include alerts/note.html content="Creating a Gerrit account requires you to log in with Google. Be aware that if you delete or unlink all Google accounts associated with your Gerrit account, you won't be able to log in anymore!" %}
 
 {% include alerts/important.html content="Gerrit ensures users have completed a valid Contributor Agreement prior to accepting any transferred objects, and if it is not completed, it aborts the network connection before data is sent." %}
 
 Now make sure your local git username matches with your Gerrit username:
 
 ```
-git config --global review.review.lineageos.org.username "gerrit username"
+git config --global user.email 'you@yourDomain.com'
+git config --global review.review.lineageos.org.username "gerritUsername"
 ```
+
+{% include alerts/note.html content="Your Gerrit username is case-sensitive." %}
 
 If you already have SSH keys set up (e.g. for GitHub), skip the following two steps.
 
 Generate the SSH keys,<sup>[[1]](#TroubleshootingTag)</sup>:
 
 ```
-ssh-keygen -t rsa -C "your@email.com"
+ssh-keygen -t ed25519 -C "your@email.com"
 ```
 
 Add the keys to the ssh-agent:
 
 ```
 eval `ssh-agent -s`
-ssh-add ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_ed25519
 ssh-add
 ```
 
-After that, copy/paste the content of `~/.ssh/id_rsa.pub` to your Gerrit SSH Settings under **Settings -> SSH Public Keys**.
+If you are using macOS, you need to run one of the following commands:
+
+```
+# macOS 11.x or older:
+ssh-add -K ~/.ssh/id_ed25519 && ssh-add -A
+
+# macOS 12.x and newer:
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519 && ssh-add --apple-load-keychain
+```
+
+After that, copy/paste the content of `~/.ssh/id_ed25519.pub` to your Gerrit SSH Settings under **Settings -> SSH Keys**.
+
+Now, try the following command to see if you can successfully authenticate to Gerrit:
+
+```
+ssh gerritUsername@review.lineageos.org -p 29418
+```
+
+If the command above returns "Bad server host key: Invalid key length", you'll need to add the following lines to `~/.ssh/config`:
+
+```
+Host review.lineageos.org
+    RSAMinSize 0
+```
+
+Otherwise, it should show:
+
+```
+  ****    Welcome to Gerrit Code Review    ****
+
+  Hi {name}, you have successfully connected over SSH.
+
+  Unfortunately, interactive shells are disabled.
+  To clone a hosted Git repository, use:
+
+  git clone ssh://gerritUsername@review.lineageos.org:29418/REPOSITORY_NAME.git
+
+Connection to review.lineageos.org closed.
+```
 
 The steps above have to be performed only once.
 
@@ -200,10 +244,10 @@ repo upload .
 
 ### Troubleshooting  {#TroubleshootingTag}
 
-<sup>[1]</sup> If you get a "Permission denied (publickey)" error and you're sure that everything is right, try using a DSA key instead of RSA.
+<sup>[1]</sup> If you get a "Permission denied (publickey)" error and you're sure that everything is right, try using an RSA key instead of ED25519.
 
 ```
-ssh-keygen -t dsa -C "your@email.com"
+ssh-keygen -t rsa -C "your@email.com"
 ```
 
 ## Getting your submission reviewed/merged
@@ -212,11 +256,11 @@ All submitted patches go through a code review process prior to being merged. In
 To make sure they get informed:
 
 1) Add reviewers:
-  - For device/kernel repos, add the [maintainer of your device](contributors.html#device-maintainers)
-  - For changes to various special projects (like this wiki), see the maintainers listed [here](contributors.html#other-projects). Note that the wiki editors can be added directly by typing "Wiki Editors" into the reviewer field
-  - For all other repos, add the [Trusted Reviewers](contributors.html#trusted-reviewers) or [Committers](contributors.html#committers)
+  - For device/kernel repos, add the [maintainer of your device]({{ "contributors.html#device-maintainers" | relative_url }})
+  - For changes to various special projects (like this wiki), see the maintainers listed [here]({{ "contributors.html#other-projects" | relative_url }}). Note that the wiki editors can be added directly by typing "Wiki Editors" into the reviewer field
+  - For all other repos, add the [Trusted Reviewers]({{ "contributors.html#trusted-reviewers" | relative_url }}) or [Committers]({{ "contributors.html#committers" | relative_url }})
 
-2) Set the [proper labels](usinggerrit-howto.html#reviewing-a-patch) to indicate your patch is ready
+2) Set the [proper labels]({{ "how-to/using-gerrit#reviewing-a-patch" | relative_url }}) to indicate your patch is ready
 
 ## Common commands
 

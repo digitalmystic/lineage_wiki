@@ -1,9 +1,9 @@
-FROM ruby:2.4
+FROM docker.io/ruby:2.4
 
 WORKDIR /src
 ADD Gemfile /src
 ADD Gemfile.lock /src
-RUN gem install bundler
+RUN gem install bundler -v 2.3.26
 RUN bundle install
 
 VOLUME /src

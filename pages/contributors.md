@@ -2,7 +2,6 @@
 sidebar: home_sidebar
 title: LineageOS contributors
 permalink: contributors.html
-versions: [16.0, 15.1]
 ---
 
 {% assign devices = "" | split: " " %}
@@ -13,14 +12,14 @@ versions: [16.0, 15.1]
 
 ## Maintainers
 
-### Head developers
+### Head Developers (LineageOS Directors)
 
-Head developers have extensive knowledge of the OS, and are project leads. These people have responsibility over the direction of
+Head Developers have extensive knowledge of the OS, and are project leads. These people have responsibility over the direction of
 the project and are committed to improving it.
 
 | Name | Nickname |
 |------|----------|
-| Kevin F. Haggerty | haggertk |
+| Kevin Haggerty | haggertk |
 | Luca Stefani | luca020400 |
 | Łukasz Patron | LuK1337 |
 | Michael Bestas | mikeioannina |
@@ -31,64 +30,53 @@ the project and are committed to improving it.
 | razorloves | razorloves |
 {: .table }
 
-### Trusted reviewers
-
-Trusted reviewers are known to provide consistent constructive feedback in line with project rules and guidelines. As a result, 
-their feedback is held as backed by project leads and recognized as a distinct group from general public reviewers.
-
-| Name | Nickname |
-|------|----------|
-| Björn Lundén | blunden |
-| Brandon McAnsh | bmc08gt |
-| Michael W. | BadDaemon |
-| Scott Warner | Tortel |
-| Shane Passmore | h8rift |
-{: .table }
-
 ### Committers
 
 Committers are responsible for testing commits and merging them in high flowrate situations. These developers have merge rights across the board.
 
 | Name | Nickname |
 |------|----------|
+| Abhisek Devkota | ciwrl |
 | Adrian DC | adriandc |
 | Arne Coucheron | arco |
 | Bruno Martins | bgcngm |
 | Chirayu Desai | cdesai |
 | Christopher N. Hesse | raymanfx |
-| Christopher R. Palmer | crpalmer |
-| Clark Scheff | D34D |
-| Dan Pasanen | invisiblek |
 | Daniel Hillenbrand | codeworkx |
 | Danny Baumann | maniac103 |
-| Diogo Ferreira | defer |
-| Ed Carrigan | senyor |
 | Ethan Chen | intervigil |
-| Gabriele M | gmrt |
 | Harry Youd | harryyoud |
+| Jan Altensen | Stricted |
 | Joey Rizzoli | joeyrizzoli |
-| Jorge Ruesga | jruesga |
-| Marcos Marado | marado |
-| Olivier Karasangabo | olivier97 |
-| Roman Birg | roman |
+| Michael W. | baddaemon |
+| Paul Keith | javelinanddart |
 | Tom Marshall | tdm |
-| Zhao Wei Liew | zwliew |
 {: .table }
 
-### Developer relations managers
+### Trusted reviewers
 
-Developer relations managers are responsible for running the day-to-day infrastructure and for keeping the health of the project.
-Although everyone has a responsibility to help new people join the community and protect the project’s health, these people maintain the contribution
-pathways that connect to potential contributors to teams that have contribution opportunities and grant new device maintainers access to devices.
+Trusted reviewers are known to provide consistent constructive feedback in line with project rules and guidelines. As a result,
+their feedback is held as backed by project leads and recognized as a distinct group from general public reviewers.
 
 | Name | Nickname |
 |------|----------|
-| Tom Powell | zifnab |
+| Björn Lundén | blunden |
+| Brandon McAnsh | bmc08gt |
+| Nolen Johnson | npjohnson |
+| Scott Warner | Tortel |
+| Shane Passmore | h8rift |
+| Timi Rautamäki | trautamaki |
 {: .table }
 
 ### Device maintainers
 
-{% for version in page.versions %}
+{%- include snippets/branches.md %}
+{%- assign versions = "" | split: " " %}
+{%- assign versions = versions | push: current_branch %}
+{%- assign versions = versions | push: branch_minus_1 %}
+{%- assign versions = versions | push: branch_minus_2 %}
+
+{% for version in versions %}
 
 #### LineageOS {{ version }}
 
@@ -108,9 +96,33 @@ pathways that connect to potential contributors to teams that have contribution 
 </table>
 {%- endfor %}
 
+### Developer relations managers
+
+Developer relations managers are responsible for onboarding new contributors, reviewing incoming submissions, fielding public questions, and for keeping the health of the project.
+Although everyone has a responsibility to help new people join the community, and to protect the project's health, these people maintain the contribution
+pathways that connect to potential contributors to teams that have contribution opportunities and grant new device maintainers access to devices.
+
+| Name | Nickname |
+|------|----------|
+| Kevin Haggerty | haggertk |
+| Nolen Johnson | npjohnson |
+| Tom Powell | zifnab |
+{: .table }
+
+### Infrastructure managers
+
+Infrastructure Managers are responsible for running the day-to-day infrastructure and managing internal signing processes.
+
+| Name | Nickname |
+|------|----------|
+| Simon Shields | fourkbomb |
+| Tom Powell | zifnab |
+{: .table }
+
+
 ## Translations
 
-We use [crowdin](https://crowdin.com/profile/LineageOS) as our translation system. To see how that works and how to contribute, click [here](translate-howto.html)
+We use [crowdin](https://crowdin.com/profile/LineageOS) as our translation system. To see how that works and how to contribute, click [here]({{ "how-to/translate" | relative_url }})
 
 ### Translations managers
 
@@ -190,5 +202,6 @@ The following people are responsible for the verification of the contents and th
 | Bruno Martins | bgcngm |
 | Michael W | baddaemon |
 | Simon Shields | fourkbomb |
+| Nolen Johnson | npjohnson |
 | razorloves | razorloves |
 {: .table }

@@ -4,7 +4,7 @@
 
 {% include alerts/note.html content="The steps below only need to be run once per device." %}
 {% include alerts/warning.html content="Unlocking the bootloader will erase all data on your device!
-Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent." %}
+Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed." %}
 
 {% if device.project_spectrum_recovery %}
 1. Download [Project Spectrum recovery]({{ device.project_spectrum_recovery }}).
@@ -50,7 +50,9 @@ adb reboot bootloader
 ```
 fastboot devices
 ```
-    {% include alerts/tip.html content="If you see `no permissions fastboot` while on Linux or macOS, try running `fastboot` as root." %}
+  If you don't get any output or an error:
+   * on Windows: make sure the device appears in the device manager without a triangle. Try other drivers until the command above works!
+   * on Linux or macOS: If you see `no permissions fastboot` try running `fastboot` as root. When the output is empty, check your USB cable and port!
 14. Now type the following command to unlock the bootloader:
 
 {% if device.custom_unlock_cmd %}
@@ -62,8 +64,11 @@ fastboot devices
 fastboot oem unlock
     ```
 {% endif %}
+    {% include alerts/note.html content="At this point the device may display on-screen prompts which will require interaction to continue the process of unlocking the bootloader. Please take whatever actions the device asks you to to proceed." %}
 
 15. If the device doesn't automatically reboot, reboot it. It should now be unlocked.
 16. Since the device resets completely, you will need to re-enable USB debugging to continue.
+
+{% include snippets/before_recovery_install.md %}
 
 {% include templates/recovery_install_fastboot_generic.md %}

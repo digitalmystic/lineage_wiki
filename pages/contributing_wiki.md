@@ -201,7 +201,9 @@ At this point you should be able to view the [local Jekyll server](http://127.0.
 
 LineageOS uses [Gerrit](https://review.lineageos.org/) to review proposed changes. Before you begin,
 you'll need to [create an account](https://review.lineageos.org/login/%23%2Fregister%2Fq%2Fstatus%3Aopen),
-and [configure an SSH key](https://review.lineageos.org/Documentation/user-upload.html#ssh).
+and [configure an SSH key](https://review.lineageos.org/Documentation/user-upload.html#ssh) (you will need to use the **ed25519** type of key).
+
+{% include alerts/note.html content="Creating a Gerrit account requires you to log in with Google. Be aware that if you delete or unlink all Google accounts associated with your Gerrit account, you won't be able to log in anymore!" %}
 
 After you've done this, you can push your commits to Gerrit:
 

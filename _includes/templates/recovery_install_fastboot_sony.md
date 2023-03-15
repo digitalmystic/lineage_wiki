@@ -1,11 +1,13 @@
 {%- assign device = site.data.devices[page.device] -%}
 
+{% include snippets/before_recovery_install.md %}
+
 ## Unlocking the bootloader
 
 {% include alerts/note.html content="The steps below only need to be run once per device." %}
 {% include alerts/warning.html content="Unlocking the bootloader will erase all data on your device!
 This also includes your DRM keys, which are stored in the Trim Area partition (also called TA).
-Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent.
+Before proceeding, ensure the data you would like to retain is backed up to your PC and/or your Google account, or equivalent. Please note that OEM backup solutions like Samsung and Motorola backup may not be accessible from LineageOS once installed.
 If you wish to backup the TA partition first, you can find tutorials related to your device on the internet." %}
 
 {% if device.install_variant and device.install_variant contains "sony_unlock_contacts" %}
@@ -33,8 +35,12 @@ adb reboot bootloader
 fastboot devices
 ```
     {% include alerts/tip.html content="If you see `no permissions fastboot` while on Linux or macOS, try running `fastboot` as root." %}
-6. Follow the instructions on [Sony's official unlocking website](http://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/) to unlock your bootloader.
-7. Since the device resets completely, you will need to re-enable USB debugging to continue.
+6. Follow the instructions on [Sony's official unlocking website](http://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/) to generate an unlock code for your bootloader.
+7. Use your code to unlock the bootloader of your device:
+```
+fastboot oem unlock <your_unlock_code>
+```
+8. Since the device resets completely, you will need to re-enable USB debugging to continue.
 
 {% if device.install_variant and device.install_variant contains "sony_init_fota" %}
 
@@ -46,15 +52,15 @@ fastboot devices
 
 ## Installing a custom recovery using `fastboot`
 
-{% if device.custom_recovery_link %}
+{%- if device.custom_recovery_link %}
 1. Download a custom recovery - you can download one [here]({{ device.custom_recovery_link }}).
-{% else %}
-{% if device.uses_lineage_recovery %}
-1. Download a custom recovery - you can download [Lineage Recovery](https://download.lineageos.org/{{ custom_recovery_codename }}). Simply download the latest recovery file, named something like `lineage-{{ device.current_branch }}-{{ site.time | date: "%Y%m%d" }}-recovery-{{ custom_recovery_codename }}.img`.
-{% else %}
+{%- elsif device.uses_twrp %}
 1. Download a custom recovery - you can download [TWRP](https://dl.twrp.me/{{ custom_recovery_codename }}). Simply download the latest recovery file, named something like `twrp-x.x.x-x-{{ custom_recovery_codename }}.img`.
-{% endif %}
-{% endif %}
+{%- elsif device.maintainers != empty %}
+1. Download [Lineage Recovery](https://download.lineageos.org/devices/{{ custom_recovery_codename }}). Simply download the latest recovery file, named `recovery.img`.
+{%- else %}
+1. [Build]({{ "devices/" | append: device.codename | append: "/build" | relative_url }}) a LineageOS installation package. The recovery will be built as part of it!
+{%- endif %}
 2. Connect your device to your PC via USB.
 3. On the computer, open a command prompt (on Windows) or terminal (on Linux or macOS) window, and type:
 ```
@@ -97,7 +103,7 @@ exit
 ```
 {% else %}
 
-{% if device.is_ab_device %}
+{% if device.is_ab_device and device.has_recovery_partition != true %}
 {% include templates/recovery_install_fastboot_ab.md %}
 {% else %}
 {% include templates/recovery_install_fastboot_generic.md %}

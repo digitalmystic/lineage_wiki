@@ -1,42 +1,38 @@
 architecture: arm
-battery: {removable: False, capacity: 2070}
+battery: {removable: False, capacity: 2070, tech: 'Li-Ion'}
 bluetooth: {spec: 4.0 + LE, profiles: [A2DP]}
 cameras:
 - {flash: 'LED', info: '5 MP'}
-- {flash: '', info: '1.3 MP'}
-channels: [discontinued]
+- {flash: None, info: '1.3 MP'}
 codename: peregrine
 cpu: Cortex-A7
 cpu_cores: '4'
 cpu_freq: 1.2 GHz
 current_branch: 14.1
+dimensions: None
 download_boot: With the device powered off, hold <kbd>Volume Down</kbd> + <kbd>Power</kbd>.
   On the next screen use <kbd>Volume Down</kbd> to scroll and then press <kbd>Volume Up</kbd> to select.
-gpu: Adreno 305
+gpu: Qualcomm Adreno 305
 image: peregrine.png
 install_method: fastboot_motorola
 kernel: android_kernel_motorola_msm8226
 maintainers: []
 models: [XT1039, XT1040, XT1042, XT1045]
-name: Moto G 4G
-network:
-- {tech: 2G, bands: '850 900 1800 1900 MHz GSM, 800 1900 MHz CDMA' }
-- {tech: 3G, bands: '850 900 1900 2100 MHz HSDPA (International), 850 1700 1900 2100 MHz HSDPA (T-Mobile, AT&T), CDMA2000 1xEV-DO' }
-- {tech: 4G, bands: '2(1900) 4(1700) 5(850) 17(700) (USA models), 1(800) 3(900) 7(1800) 8(2100) 20(2600) (International)' }
+name: moto g 4G
+network: [2G GSM, 2G CDMA, 3G UMTS, 3G CDMA2000, 4G LTE]
 peripherals: [Accelerometer, Gyroscope, Proximity sensor, Compass]
 ram: 1 GB
 recovery_boot: With the device powered off, hold <kbd>Volume Down</kbd> + <kbd>Power</kbd>.
   On the next screen use <kbd>Volume Down</kbd> to scroll to recovery and then press <kbd>Volume Up</kbd> to select.
+recovery_reboot: fastboot_menu
 release: 2014-06
-screen: 114 mm (4.5 in)
-screen_ppi: ~326
-screen_res: 720 x 1280 pixels
-screen_tech: IPS LCD capacitive touchscreen, 16M colors
-sdcard: up to 32 GB
+screen: {size: '114 mm (4.5 in)', density: 326, resolution: '720x1280', technology: 'IPS LCD'}
+sdcard: {sizeMax: '32 GB'}
 soc: Qualcomm MSM8926 Snapdragon 400
 storage: 8 GB
 tree: android_device_motorola_peregrine
 type: phone
+uses_twrp: true
 vendor: Motorola
 vendor_short: motorola
 versions: [14.1]

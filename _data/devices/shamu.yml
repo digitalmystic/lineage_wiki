@@ -3,43 +3,34 @@ battery: {removable: False, capacity: 3220, tech: 'Li-Po'}
 bluetooth: {spec: '4.1'}
 cameras:
 - {flash: 'Dual LED', info: '13 MP'}
-- {flash: '', info: '2.1 MP '}
-channels: [nightly]
+- {flash: None, info: '2.1 MP'}
 codename: shamu
 cpu: Krait 450
 cpu_cores: '4'
 cpu_freq: 2.7 GHz
-current_branch: 16.0
-depth: 10.1 mm (0.40 in)
+current_branch: 18.1
+dimensions: {width: '83 mm (3.27 in)', height: '159.3 mm (6.27 in)', depth: '10.1 mm (0.40 in)'}
 download_boot: With the device powered off, hold <kbd>Volume Down</kbd> while booting.
-gpu: Adreno 420
-height: 159.3 mm (6.27 in)
+format_on_upgrade: true
+gpu: Qualcomm Adreno 420
 image: shamu.png
 install_method: fastboot_nexus
 kernel: android_kernel_moto_shamu
 maintainers: [Elektroschmock, npjohnson]
-multiple_versions_reason: LineageOS 15.1 builds for this device support IMS (VoLTE, VoWi-Fi, Carrier Video Calling), while 16.0 does not due to compatibility issues with proprietary components. Choose which version of builds you use accordingly.
 name: Nexus 6
-network:
-- {tech: 2G, bands: '850 900 1800 1900 MHz GSM (All models), 800 1900 MHz CDMA (North/South American model only)' }
-- {tech: 3G, bands: '850 900 1700 1900 2100 MHz HSDPA (North/South American model only), 800 850 900 1700 1800 1900 2100 MHz HSDPA (Afro-Eurasian models)' }
-- {tech: 4G, bands: '2(1900) 3(1800) 4(1700/2100) 5(850) 7(2600) 12(700) 13(700) 17(700) 25(1900) 26(850) 29(700) 41(2500) (North/South American models), 1(2100) 3(1800) 5(850) 7(2600) 8(900) 9(1800) 19(800) 20(800) 28(700) 41(2500) MHz (Afro-Eurasian models)' }
+network: [2G GSM, 2G CDMA, 3G UMTS, 4G LTE]
+note_title: ANT+ and IMS support
+note_content: LineageOS 16.0 and above for this device do not support ANT+ and IMS (VoLTE, VoWi-Fi, Carrier video calling), due to compatibility issues with proprietary components.
 peripherals: [Accelerometer, Gyroscope, Proximity sensor, Compass, Barometer, Hall effect sensor, NFC, Qi wireless charging, Dual front speakers]
 ram: 3 GB
 recovery_boot: With the device powered off, hold <kbd>Volume Down</kbd> while booting. Then use the menu to select Recovery.
 release: 2014-10-29
-screen: 151 mm (5.96 in)
-screen_ppi: '493'
-screen_res: 2560x1440
-screen_tech: Pentile RGBG QHD AMOLED
-sdcard:
+screen: {size: '151 mm (5.96 in)', density: 493, resolution: '2560x1440', technology: 'Pentile RGBG QHD AMOLED'}
 soc: Qualcomm APQ8084 Snapdragon 805
 storage: 32/64 GB
 tree: android_device_moto_shamu
-type: phablet
-uses_lineage_recovery: true
+type: phone
 vendor: Google
 vendor_short: moto
-versions: [14.1, 15.1, 16.0]
-width: 83 mm (3.27 in)
+versions: [14.1, 15.1, 16.0, 17.1, 18.1]
 wifi: 802.11 a/b/g/n/ac 2x2 (MIMO), Hotspot
